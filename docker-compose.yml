@@ -1,0 +1,53 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: local
+      APP_SECRET: change-this-secret-before-production
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: MyMoney_app
+      DB_USERNAME: finance_user
+      DB_PASSWORD: finance_password
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src:/var/www/html/src
+      - ./public:/var/www/html/public
+
+  db:
+    image: mysql:8.4
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: MyMoney_app
+      MYSQL_USER: finance_user
+      MYSQL_PASSWORD: finance_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: finance_user
+      PMA_PASSWORD: finance_password
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
