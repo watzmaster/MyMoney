@@ -14,6 +14,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      seed:
+        condition: service_completed_successfully
     volumes:
       - ./src:/var/www/html/src
       - ./public:/var/www/html/public
@@ -35,6 +37,17 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/init:/docker-entrypoint-initdb.d
+
+  seed:
+    image: mysql:8.4
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_PWD: finance_password
+    volumes:
+      - ./database/sample_data.sql:/sample_data.sql:ro
+    command: ["sh", "-c", "mysql -h db -ufinance_user MyMoney_app < /sample_data.sql"]
 
   phpmyadmin:
     image: phpmyadmin:5

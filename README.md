@@ -19,6 +19,9 @@
 docker compose up --build
 ```
 
+Sample data is loaded automatically by the `seed` service when the project starts.
+Demo login: `demo@example.com` / `password123`.
+
 API จะอยู่ที่:
 
 ```text
