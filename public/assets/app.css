@@ -1057,87 +1057,57 @@ nav::-webkit-scrollbar { display: none; }
 }
 
 @media (max-width: 1180px) {
-  body.menu-open {
-    overflow: hidden;
-  }
-
   .sidebar {
-    height: 68px;
+    height: 64px;
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    padding: 10px 16px;
+    padding: 10px 14px;
     z-index: 100;
   }
 
-  .brand {
-    flex: 1;
-    min-width: 0;
-  }
+  .brand { flex: 1; }
 
-  .menu-button {
-    display: inline-flex;
-    width: 46px;
-    min-width: 46px;
-    min-height: 46px;
-    box-shadow: inset 0 0 0 1px rgba(231, 229, 228, .94);
-  }
+  .menu-button { display: inline-flex; }
 
   nav {
     position: fixed;
-    top: 68px;
-    left: 0;
+    top: 64px;
     right: 0;
     bottom: 0;
-    width: 100vw;
+    width: min(340px, 88vw);
     z-index: 120;
     display: grid;
     align-content: start;
-    justify-items: center;
-    gap: 10px;
-    padding: 28px 20px 104px;
-    border: 0;
-    border-top: 1px solid rgba(231, 229, 228, .9);
-    border-radius: 0;
-    background:
-      linear-gradient(180deg, rgba(255, 247, 237, .88), rgba(255, 255, 255, .98) 170px),
-      #fff;
-    box-shadow: 0 22px 54px rgba(28, 25, 23, .16);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-12px);
-    transition: transform .24s ease, opacity .2s ease;
+    gap: 8px;
+    padding: 18px 18px 92px;
+    border-left: 1px solid var(--line);
+    background: #fff;
+    box-shadow: -22px 0 50px rgba(28, 25, 23, .14);
+    transform: translateX(105%);
+    transition: transform .22s ease;
     overflow-y: auto;
-    overscroll-behavior: contain;
   }
 
   nav::before {
     content: "เมนู";
-    width: min(360px, 100%);
     display: block;
     padding: 0 4px 8px;
-    color: #9a3412;
+    color: var(--muted);
     font-size: 12px;
     font-weight: 900;
-    letter-spacing: 0;
-    text-align: center;
     text-transform: uppercase;
   }
 
-  body.menu-open nav {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
+  body.menu-open nav { transform: translateX(0); }
 
   .menu-backdrop {
     position: fixed;
-    inset: 68px 0 0;
+    inset: 64px 0 0;
     z-index: 80;
     display: block;
     pointer-events: none;
-    background: rgba(28, 25, 23, .46);
-    backdrop-filter: blur(3px);
+    background: rgba(28, 25, 23, .42);
     opacity: 0;
     transition: opacity .22s ease;
   }
@@ -1148,42 +1118,20 @@ nav::-webkit-scrollbar { display: none; }
   }
 
   .nav {
-    min-height: 50px;
-    width: min(360px, 100%);
+    min-height: 48px;
     justify-content: flex-start;
-    padding: 0 14px;
-    border: 1px solid transparent;
-    font-size: 15px;
-    background: rgba(255, 255, 255, .72);
-  }
-
-  .nav .icon {
-    width: 20px;
-    height: 20px;
-    flex-basis: 20px;
-  }
-
-  .nav.active {
-    border-color: #fed7aa;
-    background: #ffedd5;
-    box-shadow: 0 10px 24px rgba(249, 115, 22, .12);
+    font-size: 14px;
   }
 
   .ghost { display: none; }
 
   body.menu-open .ghost {
     position: fixed;
-    left: 50%;
-    right: auto;
-    bottom: 16px;
+    right: 18px;
+    bottom: 18px;
     z-index: 130;
     display: inline-flex;
-    width: min(360px, calc(100vw - 40px));
-    min-height: 48px;
-    border: 1px solid rgba(231, 229, 228, .92);
-    background: #fff;
-    box-shadow: 0 12px 28px rgba(28, 25, 23, .12);
-    transform: translateX(-50%);
+    width: min(304px, calc(88vw - 36px));
   }
 
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1307,37 +1255,7 @@ nav::-webkit-scrollbar { display: none; }
 }
 
 @media (max-width: 430px) {
-  .sidebar {
-    padding-inline: 10px;
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brand small { max-width: 132px; }
-
-  .brand strong {
-    font-size: 15px;
-  }
-
-  .menu-button {
-    width: 44px;
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  nav {
-    width: 100vw;
-    padding-inline: 12px;
-  }
-
-  body.menu-open .ghost {
-    left: 50%;
-    right: auto;
-    width: min(336px, calc(100vw - 32px));
-  }
-
+  .brand small { max-width: 135px; }
   .topbar h2 { font-size: 30px; }
   .metric strong { font-size: 25px; }
 }

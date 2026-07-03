@@ -11,6 +11,7 @@ final class ReportController
     public function summary(array $params, array $user): void
     {
         [$from, $to] = $this->dateRange();
+        [$accountSql, $accountBindings] = $this->accountFilter();
 
         $stmt = $this->db->prepare(
             "SELECT
@@ -18,9 +19,9 @@ final class ReportController
                 COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) AS expense,
                 COALESCE(SUM(CASE WHEN type = 'income' THEN amount WHEN type = 'expense' THEN -amount ELSE 0 END), 0) AS net
              FROM transactions
-             WHERE user_id = ? AND transaction_date BETWEEN ? AND ?"
+             WHERE user_id = ? AND transaction_date BETWEEN ? AND ?{$accountSql}"
         );
-        $stmt->execute([$user['id'], $from, $to]);
+        $stmt->execute([$user['id'], $from, $to, ...$accountBindings]);
 
         Response::json(['data' => ['from' => $from, 'to' => $to] + $stmt->fetch()]);
     }
@@ -28,16 +29,17 @@ final class ReportController
     public function cashflow(array $params, array $user): void
     {
         [$from, $to] = $this->dateRange();
+        [$accountSql, $accountBindings] = $this->accountFilter();
         $stmt = $this->db->prepare(
             "SELECT transaction_date,
                 COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) AS income,
                 COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) AS expense
              FROM transactions
-             WHERE user_id = ? AND transaction_date BETWEEN ? AND ?
+             WHERE user_id = ? AND transaction_date BETWEEN ? AND ?{$accountSql}
              GROUP BY transaction_date
              ORDER BY transaction_date ASC"
         );
-        $stmt->execute([$user['id'], $from, $to]);
+        $stmt->execute([$user['id'], $from, $to, ...$accountBindings]);
 
         Response::json(['data' => $stmt->fetchAll()]);
     }
@@ -46,16 +48,17 @@ final class ReportController
     {
         [$from, $to] = $this->dateRange();
         $type = Request::query('type', 'expense');
+        [$accountSql, $accountBindings] = $this->accountFilter('t.');
 
         $stmt = $this->db->prepare(
             "SELECT c.id, c.name, c.icon, c.color, COALESCE(SUM(t.amount), 0) AS total
              FROM transactions t
              JOIN categories c ON c.id = t.category_id
-             WHERE t.user_id = ? AND t.type = ? AND t.transaction_date BETWEEN ? AND ?
+             WHERE t.user_id = ? AND t.type = ? AND t.transaction_date BETWEEN ? AND ?{$accountSql}
              GROUP BY c.id
              ORDER BY total DESC"
         );
-        $stmt->execute([$user['id'], $type, $from, $to]);
+        $stmt->execute([$user['id'], $type, $from, $to, ...$accountBindings]);
 
         Response::json(['data' => $stmt->fetchAll()]);
     }
@@ -63,6 +66,7 @@ final class ReportController
     public function budgetUsage(array $params, array $user): void
     {
         $month = Request::query('month', date('Y-m'));
+        [$accountJoinSql, $accountBindings] = $this->accountFilter('t.');
         $stmt = $this->db->prepare(
             "SELECT b.id, b.month, b.amount AS budget_amount, b.alert_percent, c.name AS category_name,
                 COALESCE(SUM(t.amount), 0) AS spent,
@@ -75,11 +79,12 @@ final class ReportController
                 AND t.user_id = b.user_id
                 AND t.type = 'expense'
                 AND DATE_FORMAT(t.transaction_date, '%Y-%m') = b.month
+                {$accountJoinSql}
              WHERE b.user_id = ? AND b.month = ?
              GROUP BY b.id
              ORDER BY used_percent DESC"
         );
-        $stmt->execute([$user['id'], $month]);
+        $stmt->execute([...$accountBindings, $user['id'], $month]);
 
         Response::json(['data' => $stmt->fetchAll()]);
     }
@@ -94,5 +99,14 @@ final class ReportController
 
         return [$from, $to];
     }
-}
 
+    private function accountFilter(string $prefix = ''): array
+    {
+        $accountId = Request::query('account_id');
+        if ($accountId === null || $accountId === '') {
+            return ['', []];
+        }
+
+        return [" AND {$prefix}account_id = ?", [$accountId]];
+    }
+}

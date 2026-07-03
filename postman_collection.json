@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "c7b777df-5c67-4e8e-9a4b-3d865b2f82e4",
-    "name": "MyMoney API - PHP MySQL Docker",
+    "name": "Finance API - PHP MySQL Docker",
     "description": "Postman collection for the income and expense API. Run Docker first, then use Register or Login to set the token automatically.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

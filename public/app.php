@@ -7,7 +7,7 @@ declare(strict_types=1);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MyMoney</title>
+  <title>MY Money</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@ declare(strict_types=1);
   <div id="auth-view" class="auth-shell">
     <section class="auth-panel">
       <div>
-        <p class="eyebrow">MyMoney</p>
+        <p class="eyebrow">MY Money</p>
         <h1>จัดการเงินส่วนตัวครบในที่เดียว</h1>
         <p class="muted">บันทึกรายรับรายจ่าย บัญชี งบประมาณ รายการประจำ และรายงานสำหรับต่อยอดเป็นผลิตภัณฑ์จริง</p>
       </div>
@@ -54,7 +54,7 @@ declare(strict_types=1);
           </svg>
         </span>
         <div>
-          <strong>MyMoney</strong>
+          <strong>MY Money</strong>
           <small id="user-email">พร้อมใช้งาน</small>
         </div>
       </div>
@@ -77,7 +77,7 @@ declare(strict_types=1);
 
     <section id="ad-interstitial" class="ad-interstitial hidden" aria-live="polite">
       <div class="ad-card">
-        <p class="eyebrow">MyMoney Free</p>
+        <p class="eyebrow">MY Money Free</p>
         <h2>สนับสนุนการใช้งานฟรี</h2>
         <p class="muted">บัญชีฟรีหลังครบ 7 วันจะมีโฆษณาคั่นก่อนเปิดเมนูถัดไป รุ่น Premium จะไม่มีโฆษณาคั่น</p>
         <div class="ad-placeholder">
@@ -92,7 +92,7 @@ declare(strict_types=1);
     <section id="premium-modal" class="premium-modal hidden" aria-live="polite">
       <div class="premium-card">
         <button id="premium-close-button" class="premium-close" type="button" aria-label="ปิด">×</button>
-        <p class="eyebrow">MyMoney Premium</p>
+        <p class="eyebrow">MY Money Premium</p>
         <h2>ใช้งานลื่น ไม่มีโฆษณาคั่น</h2>
         <p class="muted">เหมาะสำหรับคนที่บันทึกรายรับรายจ่ายจริงจังและอยากใช้แอปต่อเนื่องแบบไม่สะดุด</p>
         <div class="premium-price">

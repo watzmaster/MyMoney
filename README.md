@@ -1,4 +1,4 @@
-# MyMoney API
+# PHP MySQL Finance API
 
 ระบบ API สำหรับบันทึกรายรับรายจ่าย รันด้วย Docker, PHP 8.3 และ MySQL 8.4
 
@@ -18,9 +18,6 @@
 ```bash
 docker compose up --build
 ```
-
-Sample data is loaded automatically by the `seed` service when the project starts.
-Demo login: `demo@example.com` / `password123`.
 
 API จะอยู่ที่:
 

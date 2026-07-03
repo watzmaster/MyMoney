@@ -175,16 +175,6 @@ function bindNavigation() {
 
   $('#menu-button').addEventListener('click', toggleMenu);
   $('#menu-backdrop').addEventListener('click', closeMenu);
-  window.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      closeMenu();
-    }
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 1180) {
-      closeMenu();
-    }
-  });
   $('#ad-continue-button').addEventListener('click', continueAfterAd);
   $('#premium-close-button').addEventListener('click', closePremiumModal);
   $('#premium-modal').addEventListener('click', event => {
@@ -569,7 +559,7 @@ function notifyBudgetAlerts(alerts, force = false) {
   toast(`${title}: ${body}`);
 
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(`MyMoney - ${title}`, {
+    new Notification(`MY Money - ${title}`, {
       body,
       tag: `budget-alert-${key}`,
       renotify: false

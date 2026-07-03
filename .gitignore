@@ -2,4 +2,5 @@
 vendor/
 node_modules/
 mysql_data/
-mobile_app/
+tools/
+finance_mobile/

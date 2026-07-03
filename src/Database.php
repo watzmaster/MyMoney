@@ -8,14 +8,11 @@ final class Database
     {
         $host = self::env('DB_HOST', '127.0.0.1');
         $port = self::env('DB_PORT', '3306');
-        $database = self::env('DB_DATABASE', 'MyMoney_app');
-        $username = self::env('DB_USERNAME', 'finance_user');
-        $password = self::env('DB_PASSWORD', 'finance_password');
-        $socket = self::env('DB_SOCKET', '');
+        $database = self::env('DB_DATABASE', 'mymoney');
+        $username = self::env('DB_USERNAME', 'mymoney_user');
+        $password = self::env('DB_PASSWORD', 'mymoney_password');
 
-        $dsn = $socket !== ''
-            ? "mysql:unix_socket={$socket};dbname={$database};charset=utf8mb4"
-            : "mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4";
+        $dsn = "mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4";
 
         return new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

@@ -10,7 +10,7 @@ final class TransactionController
 
     public function index(array $params, array $user): void
     {
-        $sql = "SELECT t.*, a.name AS account_name, ta.name AS to_account_name, c.name AS category_name
+        $sql = "SELECT t.*, a.name AS account_name, ta.name AS to_account_name, c.name AS category_name, c.icon AS icon, c.color AS color
                 FROM transactions t
                 JOIN accounts a ON a.id = t.account_id
                 LEFT JOIN accounts ta ON ta.id = t.to_account_id
@@ -161,4 +161,3 @@ final class TransactionController
         }
     }
 }
-
